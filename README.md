@@ -1,5 +1,5 @@
-# Introduction
-This repository contains the code for BERT-fused NMT, which is introduced in the ICLR-20 submission.
+# Introduction of CATSBY
+This repository contains the code for CAardinality residual connection applied to Transformer Synthesized with BERT
 
 # Requirements and Installation
 
