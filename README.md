@@ -1,6 +1,6 @@
 # Introduction of CATSBY
 This repository contains the code for CAardinality residual connection applied to Transformer Synthesized with BERT
-<center style="padding: 40px"><img width="70%" src="Figure1.png" /></center>
+<center style="padding: 40px"><img width="70%" src="examples/Figure1.png" /></center>
 # Requirements and Installation
 
 * [PyTorch](http://pytorch.org/) version == 1.0.0/1.1.0
