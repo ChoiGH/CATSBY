@@ -10,8 +10,8 @@ This repository contains the code for CAardinality residual connection applied t
 
 To install fairseq from source and develop locally:
 ```
-git clone https://github.com/bert-nmt/bert-nmt
-cd bertnmt
+git clone https://github.com/ChoiGH/CATSBY
+cd CATSBY
 pip install --editable .
 ```
 
@@ -50,7 +50,7 @@ The important options we add:
         parser.add_argument('--encoder-bert-dropout-ratio', default=0.25, type=float)
 ```
 1. `--bert-model-name` specify the BERT model name, provided in [file](bert/modeling.py).
-2. `--warmup-from-nmt` indicate you will also use a pretrained NMT model to train your BERT-fused NMT model. If you this option, we suggest you use `--reset-lr-scheduler`, too.
+2. `--warmup-from-nmt` indicate you will also use a pretrained NMT model to train your BERT integrating NMT model. If you this option, we suggest you use `--reset-lr-scheduler`, too.
 3. `--warmup-nmt-file` specify the NMT model name (in your $savedir).
 4. `--encoder-bert-dropout` indicate you will use drop-net trick.
 5. `--encoder-bert-dropout-ratio` specify the ratio ($\in [0, 0.5]$) used in drop-net.
@@ -59,7 +59,7 @@ This is a training script example:
 #!/usr/bin/env bash
 nvidia-smi
 
-cd /yourpath/bertnmt
+cd /yourpath/CATSBY
 python3 -c "import torch; print(torch.__version__)"
 
 src=en
