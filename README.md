@@ -44,16 +44,12 @@ Using data above and standard [Fairseq](https://github.com/pytorch/fairseq) repo
 The important options we add:
 ```
         parser.add_argument('--bert-model-name', default='bert-base-uncased', type=str)
-        parser.add_argument('--warmup-from-nmt', action='store_true', )
-        parser.add_argument('--warmup-nmt-file', default='checkpoint_nmt.pt', )
         parser.add_argument('--encoder-bert-dropout', action='store_true',)
         parser.add_argument('--encoder-bert-dropout-ratio', default=0.25, type=float)
 ```
 1. `--bert-model-name` specify the BERT model name, provided in [file](bert/modeling.py).
-2. `--warmup-from-nmt` indicate you will also use a pretrained NMT model to train your BERT integrating NMT model. If you this option, we suggest you use `--reset-lr-scheduler`, too.
-3. `--warmup-nmt-file` specify the NMT model name (in your $savedir).
-4. `--encoder-bert-dropout` indicate you will use drop-net trick.
-5. `--encoder-bert-dropout-ratio` specify the ratio ($\in [0, 0.5]$) used in drop-net.
+2. `--encoder-bert-dropout` indicate you will use drop-net trick.
+3. `--encoder-bert-dropout-ratio` specify the ratio ($\in [0, 0.5]$) used in drop-net.
 This is a training script example:
 ```
 #!/usr/bin/env bash
@@ -68,23 +64,12 @@ tgt=de
 ARCH=transformer_s2_iwslt_de_en
 DATAPATH=/yourdatapath
 SAVEDIR=checkpoints/iwed_${src}_${tgt}_${bedropout}
-mkdir -p $SAVEDIR
-if [ ! -f $SAVEDIR/checkpoint_nmt.pt ]
-then
-    cp /your_pretrained_nmt_model $SAVEDIR/checkpoint_nmt.pt
-fi
-if [ ! -f "$SAVEDIR/checkpoint_last.pt" ] #here to continue training on the last generated model. 
-then                                      #EX) cp checkpoint53.pt checkpoint_last.pt
-warmup="--warmup-from-nmt --reset-lr-scheduler"
-else
-warmup=""
-fi
 
 python train.py $DATAPATH \
 -a $ARCH --optimizer adam --lr 0.0005 -s $src -t $tgt --label-smoothing 0.1 \
 --dropout 0.3 --max-tokens 4000 --min-lr '1e-09' --lr-scheduler inverse_sqrt --weight-decay 0.0001 \
 --criterion label_smoothed_cross_entropy --max-update 150000 --warmup-updates 4000 --warmup-init-lr '1e-07' \
---adam-betas '(0.9,0.98)' --save-dir $SAVEDIR --share-all-embeddings $warmup \
+--adam-betas '(0.9,0.98)' --save-dir $SAVEDIR --share-all-embeddings \
 --encoder-bert-dropout | tee -a $SAVEDIR/training.log
 ```
 
