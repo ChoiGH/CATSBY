@@ -73,7 +73,7 @@ if [ ! -f $SAVEDIR/checkpoint_nmt.pt ]
 then
     cp /your_pretrained_nmt_model $SAVEDIR/checkpoint_nmt.pt
 fi
-if [ ! -f "$SAVEDIR/checkpoint_last.pt" ]
+if [ ! -f "$SAVEDIR/checkpoint_last.pt" ] #here to continue training on the last generated model. #EX) cp checkpoint53.pt checkpoint_last.pt
 then
 warmup="--warmup-from-nmt --reset-lr-scheduler"
 else
