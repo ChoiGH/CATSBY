@@ -44,12 +44,9 @@ Using data above and standard [Fairseq](https://github.com/pytorch/fairseq) repo
 The important options we add:
 ```
         parser.add_argument('--bert-model-name', default='bert-base-uncased', type=str)
-        parser.add_argument('--encoder-bert-dropout', action='store_true',)
-        parser.add_argument('--encoder-bert-dropout-ratio', default=0.25, type=float)
+
 ```
 1. `--bert-model-name` specify the BERT model name, provided in [file](bert/modeling.py).
-2. `--encoder-bert-dropout` indicate you will use drop-net trick.
-3. `--encoder-bert-dropout-ratio` specify the ratio ($\in [0, 0.5]$) used in drop-net.
 This is a training script example:
 ```
 #!/usr/bin/env bash
@@ -71,7 +68,7 @@ python train.py $DATAPATH \
 --dropout 0.3 --max-tokens 4096 --min-lr '1e-09' --lr-scheduler inverse_sqrt --weight-decay 0.0001 \
 --criterion label_smoothed_cross_entropy --max-update 150000 --warmup-updates 4000 --warmup-init-lr '1e-07' \
 --adam-betas '(0.9,0.98)' --save-dir $SAVEDIR --share-all-embeddings \
---encoder-bert-dropout --bert-model-name $BERTMODEL | tee -a $SAVEDIR/training.log
+--bert-model-name $BERTMODEL | tee -a $SAVEDIR/training.log
 ```
 
 ### Generate
